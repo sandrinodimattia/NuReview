@@ -1,0 +1,74 @@
+﻿@using System.Configuration
+@using Microsoft.Ajax.Utilities
+@using NuReview.Services
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @if (@ViewBag.Title != null)
+    {
+        <title>@ViewBag.Title - NuReview</title>
+    }
+    else
+    {
+        <title>NuReview</title>
+    }
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    @if (Helper.IsSiteInFailoverMode)
+    {
+        <div class="alert alert-warning notification">
+            <div class="container">
+                <h4>
+                    <strong>Degraded Mode</strong>
+                    We're having some issues. Some features like writing reviews have been deactivated until everything is solved.
+                </h4>
+            </div>
+        </div>
+    }
+    <div class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("NuReview", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+        </div>
+    </div>
+    @RenderSection("header", required: false)
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <div id="footer">
+        <div class="container body-content">
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="text-muted">Served from <span class="label label-info" style="font-size: 20px">@Helper.Location</span></p>
+                </div>
+                @if (Helper.IsSiteInFailoverMode)
+                {
+                    var replication = Helper.GetReplicationStatus();
+
+                    <div class="col-lg-6">
+                        <p class="text-muted">
+                            replication status: <span class="label label-warning">@(replication != null ? replication.Status.ToString() : "could not get status")</span>
+                            last sync: <span class="label label-warning">@(replication != null ? replication.LastSyncTime.ToString() : "00/00/00")</span>
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

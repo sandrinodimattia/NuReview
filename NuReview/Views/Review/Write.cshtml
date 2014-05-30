@@ -1,0 +1,45 @@
+﻿@model NuReview.Models.ReviewEditModel
+
+<div class="row reviews-title">
+    <div class="col-lg-12">
+        <h1>Review a NuGet package</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Write", "Review", FormMethod.Post))
+        {
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-lg-12 input-group-lg">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control input-lg", placeholder = "Who are you?" })
+                    @Html.ValidationMessageFor(m => m.Name)
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-lg-12 input-group-lg">
+                    @Html.TextBoxFor(m => m.PackageId, new {@class = "form-control input-lg", placeholder = "Package Id (eg: WindowsAzure.Storage)"})
+                    @Html.ValidationMessageFor(m => m.PackageId)
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-lg-12">
+                    @Html.TextAreaFor(m => m.Body, new {@class = "form-control", placeholder = "Review", rows = "5"})
+                    @Html.ValidationMessageFor(m => m.Body)
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-lg-12 input-group-lg">
+                    @Html.LabelFor(m => m.Score)
+                    @Html.TextBoxFor(m => m.Score, new {@class = "form-control input-lg", placeholder = "Your score on 10."})
+                    @Html.ValidationMessageFor(m => m.Score)
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-lg-12">
+                    <button class="btn btn-default">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
